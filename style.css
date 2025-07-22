@@ -31,3 +31,19 @@ button{
     color: aliceblue;
     border-radius: 8px;
 }
+    @media screen and (max-width: 600px) {
+      h1{
+        font-size: 24px;
+      }
+      body, button{
+        background-color: rgb(5, 79, 79);
+        color: rgb(146, 248, 248);
+      }
+      .card {
+        font-size: 16px;
+        background-color: rgb(146, 248, 248);
+        padding: 8px;
+        color: rgb(61, 120, 128);
+
+      }
+    }
