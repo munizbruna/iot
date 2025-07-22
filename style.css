@@ -40,6 +40,7 @@ button{
         color: rgb(146, 248, 248);
       }
       .card {
+        width: 50vw;
         font-size: 16px;
         background-color: rgb(146, 248, 248);
         padding: 8px;
