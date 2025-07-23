@@ -10,7 +10,7 @@ body{
     align-items: center;
 }
 .cards{
-  width: 60%;
+  width: 80%;
   display: flex;
   justify-content: space-evenly;
 }
