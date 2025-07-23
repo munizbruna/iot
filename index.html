@@ -8,12 +8,18 @@
 </head>
 <body>
     <h1>Monitoramento IoT</h1>
+    <div class="cards">
     <div class="card">
         <p>Temperatura Atual:</p>
         <p id="temp">0.0 ºC</p>
-        <button onclick="simularLeitura()">Atualizar</button>
     </div>
-    
+    <div class="card">
+        <p>Umidade Atual:</p>
+        <p id="umid">0.0</p>
+    </div>
+    </div>
 </body>
+<script src="mqttws31.js"></script>
 <script src="script.js"></script>
+
 </html>

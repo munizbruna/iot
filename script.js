@@ -1,24 +1,26 @@
-const temperaturas = [
-  {id: 1, temperatura: 23.4},
-  {id: 2, temperatura: 25.8},
-  {id: 3, temperatura: 21.7},
-  {id: 4, temperatura: 28.9},
-  {id: 5, temperatura: 30.2},
-  {id: 6, temperatura: 26.5},
-  {id: 7, temperatura: 24.1},
-  {id: 8, temperatura: 32.0},
-  {id: 9, temperatura: 27.3},
-  {id:10, temperatura: 29.6}
-]
+let clienteWeb = null;
+const temp = document.getElementById("temp")
+const umid = document.getElementById("umid")
 
+const clientId = 'Esp32' + Math.floor(Math.random() * 900) + 100;
+clienteWeb = new Paho.MQTT.Client('broker.hivemq.com', 8884, clientId);
 
-function simularLeitura(){
-    const sort = Math.floor(Math.random()* temperaturas.length)
+clienteWeb.connect({
+  useSSL: true,
+  onSuccess: function () {
+    alert('A conexão com Broker foi bem sucedida')
+    clienteWeb.subscribe('senai124/teste_conexao');
+  },
+  onFailure: function () {
+    alert('A conexão com Broker falhou')
+  }
+});
 
-    const tempSort = temperaturas[sort].temperatura
+clienteWeb.onMessageArrived = function (message) {
+  const payload = message.payloadString;
+  const dados = JSON.parse(payload);
 
-
-    const tempPage = document.getElementById("temp");
-    tempPage.textContent = `${tempSort} ºC`
+  temp.textContent = String(dados.temperatura) + " ºC"
+  umid.textContent = String(dados.umidade) + " %"
 
 }

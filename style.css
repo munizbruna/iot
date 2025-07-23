@@ -9,14 +9,19 @@ body{
     justify-content: center;
     align-items: center;
 }
+.cards{
+  width: 60%;
+  display: flex;
+  justify-content: space-evenly;
+}
 .card{
     font-size: 24px;
     border-radius: 24px;
-    width: 30vw;
+    width: 25vw;
     background-color:aquamarine;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
     display: flex;
-    flex-direction: column;
+    justify-content: space-evenly;
     align-items: center;
     padding: 16px;
 }
