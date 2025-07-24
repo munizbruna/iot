@@ -25,8 +25,8 @@ clienteWeb.onMessageArrived = function (message) {
   umid.textContent = String(dados.umidade) + " %"
 
   const agora = new Date();
-  const dataPtBr = agora.toLocaleDateString();
-  atualizado.textContent = "Atualizado em: " + dataPtBr
+  const dataHoraPtBr = agora.toLocaleString('pt-BR'); // inclui data e hora
+  atualizado.textContent = "Atualizado em: " + dataHoraPtBr;
 }
 function mostrarNotificacao(mensagem, cor = "#2ecc71") {
   const notif = document.getElementById("notificacao");
