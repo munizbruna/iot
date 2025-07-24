@@ -1,23 +1,28 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>iot project</title>
 </head>
+
 <body>
+    <div id="notificacao"></div>
+
     <h1>Monitoramento IoT</h1>
-    <div class="cards">
-    <div class="card">
-        <p>Temperatura Atual:</p>
-        <p id="temp"> </p>
-    </div>
-    <div class="card">
-        <p>Umidade Atual:</p>
-        <p id="umid"> </p>
-    </div>
     <p id="atualizado">Sem atualização recente</p>
+
+    <div class="card">
+        <div class="cards">
+            <p>🌡 Temperatura:</p>
+            <p id="temp"> </p>
+        </div>
+        <div class="cards">
+            <p>💧 Umidade:</p>
+            <p id="umid"> </p>
+        </div>
     </div>
 </body>
 <script src="mqttws31.js"></script>

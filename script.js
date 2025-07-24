@@ -9,11 +9,11 @@ clienteWeb = new Paho.MQTT.Client('broker.hivemq.com', 8884, clientId);
 clienteWeb.connect({
   useSSL: true,
   onSuccess: function () {
-    alert('A conexão com Broker foi bem sucedida')
+    mostrarNotificacao('✅ Conexão com o Broker foi bem sucedida');
     clienteWeb.subscribe('senai124/teste_conexao');
   },
   onFailure: function () {
-    alert('A conexão com Broker falhou')
+    mostrarNotificacao('❌ Falha na conexão com o Broker', '#e74c3c');
   }
 });
 
@@ -24,8 +24,19 @@ clienteWeb.onMessageArrived = function (message) {
   temp.textContent = String(dados.temperatura) + " ºC"
   umid.textContent = String(dados.umidade) + " %"
 
-
   const agora = new Date();
   const dataPtBr = agora.toLocaleDateString();
   atualizado.textContent = "Atualizado em: " + dataPtBr
 }
+function mostrarNotificacao(mensagem, cor = "#2ecc71") {
+  const notif = document.getElementById("notificacao");
+  notif.textContent = mensagem;
+  notif.style.backgroundColor = cor;
+  notif.style.display = "block";
+
+  setTimeout(() => {
+    notif.style.display = "none";
+  }, 30000); // 30 segundos
+}
+
+console.log(String(dados.statusBroken))

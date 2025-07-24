@@ -14,9 +14,12 @@ const int MQTT_PORT = 1883;
 
 // Configuração do sensor DHT11
 const int DHTPIN = 21;
-const int DHTTYPE = DHT11;
 const int PINO_WIFI = 23;
+const int DHTTYPE = DHT11;
 
+String statusWifi;
+String statusMQTT;
+String statusBroker;
 
 // Criando as instâncias (objetos)
 WiFiClient espClient;
@@ -29,20 +32,19 @@ const char *MQTT_TOPICO_TEMPERATURA = "senai124/teste_conexao"; // Topico - impo
 // Função para conectar no WiFi
 void conectarWiFi()
 {
+  digitalWrite(PINO_WIFI, LOW);
   WiFi.begin(SSID, PASSWORD);
   Serial.println("Conectando no WiFi...");
 
   while (WiFi.status() != WL_CONNECTED)
   {
-    digitalWrite(PINO_WIFI, LOW);
     delay(1000);
   }
 
   String ip = "" + WiFi.localIP().toString();
   Serial.println("Conectado ao WiFi");
   Serial.println(ip.c_str());
-  digitalWrite(PINO_WIFI, HIGH);
-
+  statusWifi = "Conectado no Wifi";
 }
 
 // Função para conectar ao servidor MQTT
@@ -64,6 +66,7 @@ void conectarMQTT()
     if (client.connect(clientId.c_str()))
     {
       Serial.println("Conectado ao Broker :)");
+      statusBroker = "Conectado no Broker ";
       Serial.println(clientId);
     }
     else
@@ -71,6 +74,7 @@ void conectarMQTT()
       Serial.println("Erro ao conectar no Broker :(");
       String mqttError = "Código do erro: " + String(client.state());
       Serial.println(mqttError.c_str());
+      statusMQTT = mqttError.c_str();
     }
   }
   // Se inscreve no(s) tópico(s)
@@ -94,10 +98,12 @@ void setup()
 
 void loop()
 {
+  digitalWrite(PINO_WIFI, LOW);
   if (!client.connected())
   {
     Serial.println("MQTT desconectado");
     conectarMQTT();
+    digitalWrite(PINO_WIFI, HIGH);
   }
   client.loop();
   enviarTemperatura();
@@ -120,16 +126,19 @@ void enviarTemperatura()
     Serial.println("Umidade: ");
     Serial.println(umidade);
 
-    //Montar o JSON com os dados
-    StaticJsonDocument<200> doc;
-    doc [ "temperatura"] = temperatura;
-    doc ["umidade"] = umidade;
+    // Montar o JSON com os dados
+    StaticJsonDocument<400> doc;
+    doc["temperatura"] = temperatura;
+    doc["umidade"] = umidade;
+    doc["statusMQTT"] = statusMQTT.c_str();
+    doc["statusWifi"] = statusWifi.c_str();
+    doc["statusBroker"] = statusBroker.c_str();
 
-    //Serializa o JSON para envio
-    char buffer[200];
+    // Serializa o JSON para envio
+    char buffer[400];
     size_t tamanho = serializeJson(doc, buffer);
 
-    //Publica no tópico
+    // Publica no tópico
     client.publish(MQTT_TOPICO_TEMPERATURA, buffer, tamanho);
   }
 }
