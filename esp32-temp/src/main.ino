@@ -15,6 +15,8 @@ const int MQTT_PORT = 1883;
 // Configuração do sensor DHT11
 const int DHTPIN = 21;
 const int DHTTYPE = DHT11;
+const int PINO_WIFI = 23;
+
 
 // Criando as instâncias (objetos)
 WiFiClient espClient;
@@ -32,12 +34,15 @@ void conectarWiFi()
 
   while (WiFi.status() != WL_CONNECTED)
   {
+    digitalWrite(PINO_WIFI, LOW);
     delay(1000);
   }
 
   String ip = "" + WiFi.localIP().toString();
   Serial.println("Conectado ao WiFi");
   Serial.println(ip.c_str());
+  digitalWrite(PINO_WIFI, HIGH);
+
 }
 
 // Função para conectar ao servidor MQTT
@@ -84,6 +89,7 @@ void setup()
   conectarWiFi();
   conectarMQTT();
   dht.begin();
+  pinMode(PINO_WIFI, OUTPUT);
 }
 
 void loop()
