@@ -1,6 +1,7 @@
 let clienteWeb = null;
 const temp = document.getElementById("temp")
 const umid = document.getElementById("umid")
+const atualizado = document.getElementById("atualizado")
 
 const clientId = 'Esp32' + Math.floor(Math.random() * 900) + 100;
 clienteWeb = new Paho.MQTT.Client('broker.hivemq.com', 8884, clientId);
@@ -23,4 +24,8 @@ clienteWeb.onMessageArrived = function (message) {
   temp.textContent = String(dados.temperatura) + " ºC"
   umid.textContent = String(dados.umidade) + " %"
 
+
+  const agora = new Date();
+  const dataPtBr = agora.toLocaleDateString();
+  atualizado.textContent = "Atualizado em: " + dataPtBr
 }
