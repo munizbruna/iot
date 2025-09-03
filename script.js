@@ -4,7 +4,7 @@ const umid = document.getElementById("umid")
 const atualizado = document.getElementById("atualizado")
 
 const clientId = 'Esp32' + Math.floor(Math.random() * 900) + 100;
-clienteWeb = new Paho.MQTT.Client('broker.hivemq.com', 8884, clientId);
+clienteWeb = new Paho.MQTT.Client('broker.emqx.io', 8084, clientId);
 
 clienteWeb.connect({
   useSSL: true,
